@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out - Ethio-Canada Visa System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta http-equiv="refresh" content="3;url=admin_login.html">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-flags">
+            <img src="https://flagcdn.com/w40/et.png" alt="Ethiopia Flag" class="flag">
+            <h1><i class="fas fa-sign-out-alt"></i> Logged Out</h1>
+            <img src="https://flagcdn.com/w40/ca.png" alt="Canada Flag" class="flag">
+        </div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h2><i class="fas fa-check-circle"></i> Successfully Logged Out</h2>
+                <p class="subtitle">You have been securely logged out of the admin panel</p>
+            </div>
+
+            <div class="logout-message">
+                <div class="success-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Logout Successful</h3>
+                <p>Your admin session has been terminated and you have been logged out for security reasons.</p>
+                <p class="redirect-notice">You will be redirected to the login page in <span id="countdown">3</span> seconds...</p>
+
+                <div class="logout-actions">
+                    <a href="admin_login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login Again
+                    </a>
+                    <a href="index.html" class="btn btn-outline">
+                        <i class="fas fa-home"></i> Go to Home
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <p><i class="fas fa-info-circle"></i> For security purposes, always log out when you're finished using the admin panel.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer
+        let countdown = 3;
+        const countdownElement = document.getElementById('countdown');
+
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = 'admin_login.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
