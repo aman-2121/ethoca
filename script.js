@@ -1,4 +1,4 @@
-// script.js - Ethio-Canada Visa Website JavaScript
+ // script.js - Ethio-Canada Visa Website JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize camera functionality (face detection optional)
@@ -126,20 +126,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let streamBack = null;
     let streamSelfie = null;
 
+    // Debug: Check if buttons are found
+    console.log('takePhotoFront:', takePhotoFront);
+    console.log('takePhotoBack:', takePhotoBack);
+    console.log('takeSelfie:', takeSelfie);
+
     if (takePhotoFront) {
         takePhotoFront.addEventListener('click', function() {
+            console.log('takePhotoFront clicked');
             startCamera('front');
         });
     }
 
     if (takePhotoBack) {
         takePhotoBack.addEventListener('click', function() {
+            console.log('takePhotoBack clicked');
             startCamera('back');
         });
     }
 
     if (takeSelfie) {
         takeSelfie.addEventListener('click', function() {
+            console.log('takeSelfie clicked');
             startCamera('selfie');
         });
     }
@@ -164,11 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             facingMode = 'user'; // Front-facing camera for selfie
         }
 
-        // Check if running on HTTPS (required for camera access)
-        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-            alert('Camera access requires HTTPS. Please ensure the site is loaded over a secure connection (https://).');
-            return;
-        }
+
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
@@ -241,8 +245,15 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.toBlob(function(blob) {
             const file = new File([blob], `${side === 'selfie' ? 'selfie' : 'national_id_' + side}.jpg`, { type: 'image/jpeg' });
 
-            // Set the file to the input
+            // Create a new DataTransfer to preserve existing files if any
             const dt = new DataTransfer();
+            // If there are existing files, preserve them
+            if (input.files && input.files.length > 0) {
+                for (let i = 0; i < input.files.length; i++) {
+                    dt.items.add(input.files[i]);
+                }
+            }
+            // Add the new captured file
             dt.items.add(file);
             input.files = dt.files;
 

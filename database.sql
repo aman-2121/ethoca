@@ -2,8 +2,8 @@
 -- Run this SQL to create the database and tables
 
 -- Create database
-CREATE DATABASE IF NOT EXISTS if0_40927267_visa_application;
-USE if0_40927267_visa_application;
+CREATE DATABASE IF NOT EXISTS visa_application;
+USE visa_application;
 
 -- Create applications table
 CREATE TABLE IF NOT EXISTS applications (

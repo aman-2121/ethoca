@@ -25,17 +25,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // File validation
-    if (!isset($_FILES['national_id_front']) || $_FILES['national_id_front']['error'] != 0) {
-        $errors[] = "National ID Front image is required.";
-    }
-    
-    if (!isset($_FILES['national_id_back']) || $_FILES['national_id_back']['error'] != 0) {
-        $errors[] = "National ID Back image is required.";
-    }
+    // File validation - check both uploaded files and form files
+    $file_fields = ['national_id_front', 'national_id_back', 'selfie'];
 
-    if (!isset($_FILES['selfie']) || $_FILES['selfie']['error'] != 0) {
-        $errors[] = "Selfie image is required.";
+    foreach ($file_fields as $field) {
+        $has_file = false;
+
+        // Check if file was uploaded via traditional form submission
+        if (isset($_FILES[$field]) && $_FILES[$field]['error'] == 0) {
+            $has_file = true;
+        }
+
+        // Also check if file input has any files (for camera captured images)
+        if (isset($_FILES[$field]) && isset($_FILES[$field]['name']) && !empty($_FILES[$field]['name'])) {
+            $has_file = true;
+        }
+
+        if (!$has_file) {
+            $field_name = str_replace('_', ' ', $field);
+            $errors[] = ucfirst($field_name) . " is required.";
+        }
     }
     
     // Check file types and sizes
